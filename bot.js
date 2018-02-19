@@ -40,14 +40,10 @@
 	}
     
 	function getSelectedTitle(){
-		var chats = document.querySelectorAll('.CxUIE');
+		var activeChat = document.querySelectorAll('._2EXPL.CxUIE');
 		var selectedTitle;
-		for (var i = 0; i < chats.length; i++){
-			if (chats[i]){
-				if (chats[i].querySelector('.active')){
-					selectedTitle = chats[i].querySelector('._1wjpf').title;
-				}
-			}
+		if (activeChat.length > 0){
+            selectedTitle = activeChat[0].querySelector('._1wjpf').title;
 		}
 		return selectedTitle;
 	}
@@ -104,19 +100,19 @@
 
 	// Select a chat to show the main box
 	const selectChat = (chat, cb) => {
-		//const title = chat.querySelector('._1wjpf').title;
+		const title = chat.querySelector('._1wjpf').title;
 		eventFire(chat, 'mousedown');
 
 		if (!cb) return;
 
 		const loopFewTimes = () => {
 			setTimeout(() => {
-				//const titleMain = getSelectedTitle();
+				const titleMain = getSelectedTitle();
 
-				/*if (titleMain != title){
+				if (titleMain!== undefined && titleMain != title){
 					console.log('not yet');
 					return loopFewTimes();
-				}*/
+				}
 
 				return cb();
 			}, 300);
