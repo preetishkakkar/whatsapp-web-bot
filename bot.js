@@ -40,12 +40,12 @@
 	}
     
 	function getSelectedTitle(){
-		var chats = document.querySelectorAll('.chat-drag-cover');
+		var chats = document.querySelectorAll('.CxUIE');
 		var selectedTitle;
 		for (var i = 0; i < chats.length; i++){
 			if (chats[i]){
 				if (chats[i].querySelector('.active')){
-					selectedTitle = chats[i].querySelector('.emojitext').title;
+					selectedTitle = chats[i].querySelector('._1wjpf').title;
 				}
 			}
 		}
@@ -104,19 +104,19 @@
 
 	// Select a chat to show the main box
 	const selectChat = (chat, cb) => {
-		const title = chat.querySelector('.emojitext').title;
+		//const title = chat.querySelector('._1wjpf').title;
 		eventFire(chat, 'mousedown');
 
 		if (!cb) return;
 
 		const loopFewTimes = () => {
 			setTimeout(() => {
-				const titleMain = getSelectedTitle();
+				//const titleMain = getSelectedTitle();
 
-				if (titleMain != title){
+				/*if (titleMain != title){
 					console.log('not yet');
 					return loopFewTimes();
-				}
+				}*/
 
 				return cb();
 			}, 300);
@@ -131,7 +131,7 @@
 		var title;
 
 		if (chat){
-			title = chat.querySelector('.emojitext').title;
+			title = chat.querySelector('._1wjpf').title;
 		} else {
 			title = getSelectedTitle();
 		}
@@ -146,7 +146,7 @@
 		document.querySelector('.pluggable-input-body').dispatchEvent(event);
 
 		//Click at Send Button
-		eventFire(document.querySelector('.compose-btn-send'), 'click');
+		eventFire(document.querySelector('#main span[data-icon="send"]'), 'click');
 
 		cb();
 	}
@@ -156,7 +156,7 @@
 	//
 	const start = (_chats, cnt = 0) => {
 		// get next unread chat
-		const chats = _chats || document.querySelectorAll('.unread.chat');
+		const chats = _chats || document.querySelectorAll('._15G96');
 		const chat = chats[cnt];
 
 		var processLastMsgOnChat = false;
@@ -181,8 +181,8 @@
 		// get infos
 		var title;
 		if (!processLastMsgOnChat){
-			title = chat.querySelector('.emojitext').title + '';
-			lastMsg = (chat.querySelectorAll('.emojitext.ellipsify')[1] || { innerText: '' }).innerText; //.last-msg returns null when some user is typing a message to me
+			title = chat.parentElement.parentElement.parentElement.parentElement.querySelector('._1wjpf').title + '';
+			lastMsg = (chat.parentElement.parentElement.parentElement.parentElement.querySelectorAll('._1wjpf._3NFp9')[0] || { innerText: '' }).innerText; //.last-msg returns null when some user is typing a message to me
 		} else {
 			title = getSelectedTitle();
 		}
@@ -225,8 +225,8 @@
 
 		// select chat and send message
 		if (!processLastMsgOnChat){
-			selectChat(chat, () => {
-				sendMessage(chat, sendText.trim(), () => {
+			selectChat(chat.parentElement.parentElement.parentElement.parentElement, () => {
+				sendMessage(chat.parentElement.parentElement.parentElement.parentElement, sendText.trim(), () => {
 					goAgain(() => { start(chats, cnt + 1) }, 0.1);
 				});
 			})
