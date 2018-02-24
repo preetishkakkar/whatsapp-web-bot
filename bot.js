@@ -144,7 +144,7 @@
 	// Select a chat to show the main box
 	const selectChat = (chat, cb) => {
 		const title = getElement("chat_title",chat).title;
-		eventFire(chat, 'mousedown');
+		eventFire(chat.firstChild.firstChild, 'mousedown');
 		if (!cb) return;
 		const loopFewTimes = () => {
 			setTimeout(() => {
@@ -171,17 +171,19 @@
 			title = getElement("selected_title").title;
 		}
 		ignoreLastMsg[title] = message;
+		
+		messageBox = document.querySelectorAll("[spellcheck='true']")[0];
 
 		//add text into input field
-		document.querySelector('.pluggable-input-body').innerHTML = message.replace(/  /gm,'');
+		messageBox.innerHTML = message.replace(/  /gm,'');
 
 		//Force refresh
 		event = document.createEvent("UIEvents");
 		event.initUIEvent("input", true, true, window, 1);
-		document.querySelector('.pluggable-input-body').dispatchEvent(event);
+		messageBox.dispatchEvent(event);
 
 		//Click at Send Button
-		eventFire(document.querySelector('#main span[data-icon="send"]'), 'click');
+		eventFire(document.querySelector('span[data-icon="send"]'), 'click');
 
 		cb();
 	}
